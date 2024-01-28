@@ -1,21 +1,27 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorteo</title>
-</head>
-<body>
+<?php
+function lecturaArchivoJson()
+{
+    $jsonData = file_get_contents('data.json');
+    $dataArray = json_decode($jsonData, true);
 
-<form action="resultado.php" method="post">
-    <label for="seleccion">Selecciona una opción:</label>
-    <select id="seleccion" name="opcion">
-        <option value="masterclass">Masterclass</option>
-        <option value="shortcut">Shortcut</option>
-    </select>
-    <br>
-    <input type="submit" value="Realizar Sorteo">
-</form>
+    return $dataArray;
+}
 
-</body>
-</html>
+function asociacionAlumno($dataArray)
+{
+    $indiceNumAleatorio = array_rand($dataArray['alumnos'], 1);
+    $alumnoEscogido = $dataArray['alumnos'][$indiceNumAleatorio]['nombre'];
+
+    return $alumnoEscogido;
+}
+
+function imprimirResolucionMasterclass($alumnoEscogido)
+{
+    echo "El alumno seleccionado para realizar la siguiente Masterclass es: " . $alumnoEscogido . PHP_EOL;
+}
+
+function imprimirResolucionShortcut($alumnoEscogido)
+{
+    echo "El alumno seleccionado para realizar el siguiente Shortcut de la semana es: " . $alumnoEscogido . PHP_EOL;
+}
+?>
